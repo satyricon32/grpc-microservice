@@ -29,8 +29,8 @@ app.add_middleware(
 async def check_token(request: Request, call_next):
     print(request.method) 
     url = str(request.url)
-    if "docs" in url or "openapi" in url or "OPTIONS" in str(request.method):
-        return await call_next(request)
+    if "docs" in url or "openapi" in url or "OPTIONS" in str(request.method): 
+        return await call_next(request) # разрешаем запросы по адрессу docs и openapi, а также по методу OPTIONS
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = auth_pb2_grpc.TokenizerStub(channel)
         token = str(request.headers['authorization']).split(" ")[1]

@@ -8,9 +8,9 @@ bills = APIRouter()
 
 @bills.post('/', response_model=BillOut, status_code=201)
 async def create_bill(payload: BillIn):
-    # bill_id = await db_manager.add_bill(payload)
+    bill_id = await db_manager.add_bill(payload)
     response = {
-        'id': 0,
+        'id': bill_id,
         **payload.dict()
     }
 
@@ -43,12 +43,17 @@ async def update_bill(id: int, payload: BillUpdate):
     bill_in_db = BillIn(**bill)
 
     updated_bill = bill_in_db.copy(update=update_data)
+    bill = await db_manager.update_bill(id, updated_bill)
 
-    return await db_manager.update_bill(id, updated_bill)
+    return {
+        'id': id,
+        **payload.dict()
+    }
 
 @bills.delete('/{id}/', response_model=None)
 async def delete_bill(id: int):
     bill = await db_manager.get_bill(id)
     if not bill:
         raise HTTPException(status_code=404, detail="Bill not found")
-    return await db_manager.delete_bill(id)
+    await db_manager.delete_bill(id)
+    return 'success'

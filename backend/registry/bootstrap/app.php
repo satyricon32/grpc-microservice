@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +74,10 @@ $app->configure('app');
 
 $app->middleware([
     App\Http\Middleware\Cors::class
+]);
+
+$app->middleware([
+    App\Http\Middleware\Authorize::class
 ]);
 
 // $app->routeMiddleware([

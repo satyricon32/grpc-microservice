@@ -9,6 +9,8 @@ class BillIn(BaseModel):
     lastname: str
     middlename: str
     patient_id: int
+    appointment_id: int
+    doctor_id: str
 
 
 class BillOut(BillIn):
@@ -23,3 +25,5 @@ class BillUpdate(BillIn):
     lastname: str
     middlename: str
     patient_id: int
+    appointment_id: int
+    doctor_id: str

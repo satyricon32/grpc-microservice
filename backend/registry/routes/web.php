@@ -27,4 +27,26 @@ $router->group(['middleware' => \App\Http\Middleware\Authorize::class, 'prefix' 
     $router->get('/testToken/{token}', function ($token) {
         return checkToken($token);
     });
+    $router->group(['prefix' => 'patients'], function() use ($router) {
+        $router->get('/', 'PatientController@index');
+        $router->get('/create', 'PatientController@create');
+        $router->post('/', 'PatientController@store');
+        $router->get('/{id}', 'PatientController@show');
+        $router->get('/{id}/edit', 'PatientController@edit');
+        $router->put('/{id}', 'PatientController@update');
+        $router->delete('/{id}', 'PatientController@destroy');
+    });
+    $router->group(['prefix' => 'appointments'], function() use ($router) {
+        $router->get('/', 'AppointmentController@index');
+        $router->get('/create', 'AppointmentController@create');
+        $router->post('/', 'AppointmentController@store');
+        $router->get('/{id}', 'AppointmentController@show');
+        $router->get('/{id}/edit', 'AppointmentController@edit');
+        $router->put('/{id}', 'AppointmentController@update');
+        $router->delete('/{id}', 'AppointmentController@destroy');
+    });
+});
+
+$router->group(['middleware' => \App\Http\Middleware\Authorize::class], function () use ($router) {
+    // код
 });

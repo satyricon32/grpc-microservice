@@ -34,7 +34,7 @@ class Authorize
         $token = $request->header('Authorization');
         $token = explode(" ", $token)[1];
         // die(print_r($token));
-        if (($message = $this->checktoken($token)) != -1) {
+        if (($message = $this->checktoken($token)) != "-1") {
             return $next($request);
         }
         return response($message, 401);
